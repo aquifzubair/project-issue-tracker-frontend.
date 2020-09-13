@@ -86,7 +86,7 @@ class IssueForm extends React.Component {
                         <option>select status ...</option>
                         <option value="active">Active</option>
                         <option value="close">Close</option>
-                        <option value="ongoing">Ongoing</option>
+                        <option value="progress">progress</option>
                     </select><br></br>                    
 
                     <label>Priority: </label>

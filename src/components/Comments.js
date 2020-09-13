@@ -39,7 +39,7 @@ class Comments extends React.Component {
     render(){
         const allComments = this.state.comments.map(comment => {
             return (
-                <div key={comment.comment_id} className='comments'>
+                <div key={comment.comment_id} className='comment'>
                     
                     <div className='item'>
                         <p>{comment.comment_message}</p>
@@ -52,7 +52,7 @@ class Comments extends React.Component {
             )
         })
         return(
-            <div className='issues'>
+            <div className='comments'>
                 {allComments}
             </div>
         )

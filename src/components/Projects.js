@@ -85,10 +85,9 @@ class Project extends React.Component {
                         </div>
 
                         <div className='item'>
-                            <Link to='ProjecteditForm'>
+                            <Link to='ProjectEditForm'>
                                 <Button onClick={this.setModalShow} variant="outline-secondary" size='sm'>edit</Button>
-                            </Link>
-                            
+                            </Link>                            
                         </div>
 
                         <div className='item item-end'>
