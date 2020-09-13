@@ -27,8 +27,8 @@ class Comments extends React.Component {
                 method: 'delete',
                 url: `http://localhost:3001/comments/delete/${id}`,
             })
-                .then(response => console.log(response))
-                .catch(err => console.error(err))
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
 
             const filterComments = this.state.comments.filter(comment => comment.comment_id !== id)
             this.setState({ comments:filterComments })
@@ -40,8 +40,9 @@ class Comments extends React.Component {
         const allComments = this.state.comments.map(comment => {
             return (
                 <div key={comment.comment_id} className='comments'>
+                    
                     <div className='item'>
-                    <p>{comment.comment_message}</p>
+                        <p>{comment.comment_message}</p>
                     </div>
                     
                     <div className='item-end'>

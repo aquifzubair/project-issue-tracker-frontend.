@@ -2,15 +2,15 @@ import React from 'react';
 import axios from 'axios'
 import { Modal } from 'react-bootstrap';
 
-class ProjectForm extends React.Component {
+class ProjectEditForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            project_name: '',
-            created_by: '',
-            description: '',
-            created_on: '',
-            expected_completion_time: '',
+            project_name: this.props.project_name,
+            created_by: this.props.created_by,
+            description: this.props.description,
+            created_on: this.props.created_on.slice(0,10),
+            expected_completion_time: this.props.expected_completion_time.slice(0,10),
         }
     }
 
@@ -25,8 +25,8 @@ class ProjectForm extends React.Component {
         e.preventDefault();
         axios(
             {
-                method: `post`,
-                url: `http://localhost:3001/projects/insert`,
+                method: `put`,
+                url: `http://localhost:3001/projects/update/${this.props.project_id}`,
                 data: this.state
             }
         )
@@ -45,7 +45,7 @@ class ProjectForm extends React.Component {
 
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        New proect form
+                        Edit Project
                 </Modal.Title>
                 </Modal.Header>
 
@@ -57,15 +57,16 @@ class ProjectForm extends React.Component {
                                 onChange={this.handleChange} 
                                 name='project_name' 
                                 className='form-control form-control-sm' 
+                                value={this.state.project_name} 
                                 required
                             ></input><br />
                         
                         <label> Created By:</label>
                             <input 
                                 type='text' 
-                                onChange={this.handleChange} 
-                                name='created_by' 
-                                className='form-control form-control-sm' 
+                                onChange={this.handleChange}
+                                name='created_by' className='form-control form-control-sm' 
+                                value={this.state.created_by} 
                                 required
                             ></input><br />
                         
@@ -74,26 +75,22 @@ class ProjectForm extends React.Component {
                                 type='textarea' 
                                 onChange={this.handleChange} 
                                 name='description' 
-                                required></textarea
-                            ><br />
-                        
-                        <label> Created on:</label>
-                            <input 
-                                type='date' 
-                                onChange={this.handleChange} 
-                                name='created_on' 
+                                value={this.state.description}
                                 required
-                            ></input><br />
+                            ></textarea><br />
+                        
                         
                         <label> Completion time:</label>
                             <input 
                                 type='date' 
                                 onChange={this.handleChange} 
                                 name='expected_completion_time' 
+                                value={this.state.expected_completion_time} 
                                 required
                             ></input><br />
                         
                         <button type='submit' className='btn btn-primary' >Submit</button><br />
+
                     </form>
 
                 <Modal.Footer>
@@ -105,4 +102,4 @@ class ProjectForm extends React.Component {
     }
 }
 
-export default ProjectForm;
+export default ProjectEditForm;

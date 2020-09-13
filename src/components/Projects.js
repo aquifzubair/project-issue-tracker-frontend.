@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Issues from './Issues';
 import IssueForm from './IssueForm'
+import ProjectEditForm from './projectEditForm'
 
 import { Button } from 'react-bootstrap'
 import {OverlayTrigger,Tooltip} from 'react-bootstrap'
@@ -21,7 +22,6 @@ class Project extends React.Component {
         this.state = {
             project: [],
             modalShow: false,
-            // isNewlyCreated:false
         }
     }
 
@@ -30,20 +30,6 @@ class Project extends React.Component {
             modalShow: true
         })
     }
-
-    // isNewlyCreated = () => {
-    //     this.setState({
-    //         isNewlyCreated:true
-    //     })
-    // }
-
-    // componentDidUpdate(_, prevState){
-    //     if(this.state.isNewlyCreated){
-    //         axios.get('http://localhost:3001/projects')
-    //         .then(data => data.data)
-    //         .then(data => this.setState({ project: data, modalShow:false, isNewlyCreated:false }))
-    //     }
-    // }
 
     componentDidMount() {
         axios.get('http://localhost:3001/projects')
@@ -58,8 +44,8 @@ class Project extends React.Component {
                 method: 'delete',
                 url: `http://localhost:3001/projects/delete/${id}`,
             })
-                .then(response => console.log(response))
-                .catch(err => console.error(err))
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
 
             const projects = this.state.project.filter(project => project.project_id !== id)
             this.setState({ project: projects })
@@ -74,9 +60,7 @@ class Project extends React.Component {
         </Tooltip>
       );
 
-    edit = () => {
-        console.log('edit')
-    }
+    
     render() {
         let allProjects = this.state.project.map(project => {
             return (
@@ -96,35 +80,57 @@ class Project extends React.Component {
                             </Link>
                         </div>
 
-                            <div className='item'>
-                                <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
-                            </div>
-
-                            <div className='item'>
-                                <Button onClick={this.edit} variant="outline-secondary" size='sm'>edit</Button>{' '}
-                            </div>
-
-                            <div className='item item-end'>
-                                <Link to='issueForm'>
-                                    <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Issue</Button>{' '}
-                                </Link>
-                            </div>                            
-
+                        <div className='item'>
+                            <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
                         </div>
 
-                        <Switch>
+                        <div className='item'>
+                            <Link to='ProjecteditForm'>
+                                <Button onClick={this.setModalShow} variant="outline-secondary" size='sm'>edit</Button>
+                            </Link>
+                            
+                        </div>
 
-                            <Route path='/issues'>
-                                <Issues project_id={project.project_id} project_name={project.project_name} />
-                            </Route>
-                            <Route path='/issueForm'>
-                                <IssueForm
-                                    project_id={project.project_id}
-                                    show={this.state.modalShow}
-                                    onHide={() => this.setState({ modalShow: false })} />
-                            </Route>
+                        <div className='item item-end'>
+                            <Link to='issueForm'>
+                                <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Issue</Button>
+                            </Link>
+                        </div>                            
 
-                        </Switch>
+                    </div>
+
+                    <Switch>
+
+                        <Route path='/issues'>
+                            <Issues project_id={project.project_id} project_name={project.project_name} />
+                        </Route>
+                        <Route path='/issueForm'>
+
+                            <IssueForm
+                                method='insert'
+                                project_id={project.project_id}
+                                show={this.state.modalShow}
+                                onHide={() => this.setState({ modalShow: false })} 
+                            />
+
+                        </Route>
+
+                        <Route path='/ProjectEditForm'>
+
+                            <ProjectEditForm
+                                created_on={project.created_on}
+                                project_name={project.project_name}
+                                created_by={project.created_by}
+                                description={project.description}
+                                expected_completion_time={project.expected_completion_time}
+                                project_id={project.project_id}
+                                show={this.state.modalShow}
+                                onHide={() => this.setState({ modalShow: false })} 
+                            />
+
+                        </Route>
+
+                    </Switch>
                     
                 </Router>
 
@@ -132,9 +138,9 @@ class Project extends React.Component {
         })
 
         return (
-                    <div className='allProjects'>
-                        {allProjects}
-                    </div>
+            <div className='allProjects'>
+                {allProjects}
+            </div>
         )
     }
 }

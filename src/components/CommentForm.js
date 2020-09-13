@@ -28,12 +28,11 @@ class CommentForm extends React.Component {
                 data: this.state
             }
         )
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
     }
 
     render() {
-        console.log(this.state)
         return (
             <Modal
                 {...this.props}
@@ -49,13 +48,26 @@ class CommentForm extends React.Component {
                 </Modal.Header>
                 <form onSubmit={this.handleSubmit}>
                     <label> Comment By:</label>
-                    <input type='text' onChange={this.handleChange} name='comment_by' className='form-control form-control-sm' required></input>
+                    <input 
+                        type='text' 
+                        onChange={this.handleChange} 
+                        name='comment_by' 
+                        className='form-control form-control-sm' 
+                        required
+                    ></input>
                     
                     <label> Comment:</label>
-                    <textarea type='textarea' onChange={this.handleChange} name='message' className="form-control" row='10' required></textarea><br></br>
-                    
+                    <textarea 
+                        type='textarea'
+                        onChange={this.handleChange} 
+                        name='message' 
+                        className="form-control" 
+                        row='10' 
+                        required
+                    ></textarea><br></br>                    
                     
                     <button type='submit' className='btn btn-primary'>Submit</button>
+                    
                 </form>
                 <Modal.Footer>
                     <button onClick={this.props.onHide}>Close</button>

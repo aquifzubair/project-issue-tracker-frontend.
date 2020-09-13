@@ -40,8 +40,8 @@ class Issues extends React.Component {
                 method: 'delete',
                 url: `http://localhost:3001/projects/issues/${id}`,
             })
-                .then(response => console.log(response))
-                .catch(err => console.error(err))
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
 
             const filterIssue = this.state.issues.filter(issue => issue.issue_id !== id)
             this.setState({ issues: filterIssue })
@@ -54,7 +54,9 @@ class Issues extends React.Component {
         const allIssues = this.state.issues.map(issue => {
             return (
                 <Router key={issue.issue_id} >
+
                     <div className='issue'>
+
                         <div className='item'>
                             <Link to='/comments'>
                                 <p className='it'> {issue.issue_summary}</p>
@@ -63,8 +65,8 @@ class Issues extends React.Component {
 
                         <div className='item'>
                             <p>{issue.issue_status}</p>
-
                         </div>
+
                         <div className='item'>
                             <p>{issue.issue_date.slice(0, 10)}</p>
                         </div>
@@ -74,6 +76,7 @@ class Issues extends React.Component {
                             <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Comment</Button>{' '}
                             </Link>
                         </div>
+
                         <div className='item-end'>
                             <Button onClick={(e) => this.delete(issue.issue_id, e)} variant="outline-danger" size='sm'>Delete</Button>
                         </div>
@@ -81,15 +84,18 @@ class Issues extends React.Component {
                     </div>
 
                     <Switch>
+
                         <Route exact path='/comments'>
                             <Comments issue_id={issue.issue_id}/>
                         </Route>
+
                         <Route exact path='/commentForm'>
                             <CommentForm 
                             issue_id={issue.issue_id}
                             show={this.state.modalShow}
                             onHide={() => this.setState({ modalShow: false })}/>
                         </Route>
+
                     </Switch>
                 </Router>
             )
@@ -97,7 +103,6 @@ class Issues extends React.Component {
         return (
             <div className='issues'>
                 <h3>issues in {this.props.project_name}</h3>
-
                 {allIssues}
             </div>
         )

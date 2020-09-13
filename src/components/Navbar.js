@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from './Projects'
 import ProjectForm from './ProjectForm'
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 import {
     BrowserRouter as Router,
@@ -9,10 +9,6 @@ import {
     Route,
     Link
 } from "react-router-dom";
-
-
-
-
 class Navbar extends React.Component {
 
     constructor(props) {
@@ -30,12 +26,13 @@ class Navbar extends React.Component {
 
     render() {
         return (
+
             <Router>
                 <div className='navbar'>
 
                     <Link to='/project'>
                         <div>
-                            <Button onClick={this.handleClick} variant="primary" size='sm'>All Projects                            </Button>
+                            <Button onClick={this.handleClick} variant="primary" size='sm'>All Projects</Button>
                         </div>
                     </Link>
 
@@ -52,8 +49,6 @@ class Navbar extends React.Component {
                 </Switch>
 
             </Router>
-
-
 
         )
     }

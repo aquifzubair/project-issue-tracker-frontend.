@@ -55,17 +55,34 @@ class IssueForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
 
                     <label> Issue Name:</label>
-                    <input type='text' onChange={this.handleChange} name='summary' className='form-control form-control-sm' required></input><br></br>
+                    <input 
+                        type='text' 
+                        onChange={this.handleChange} 
+                        name='summary' 
+                        className='form-control form-control-sm' 
+                        required
+                    ></input><br></br>
 
                     <label> description:</label>
-                    <textarea type='textarea' onChange={this.handleChange} name='description' required></textarea><br></br>
+                        <textarea 
+                        type='textarea' 
+                        onChange={this.handleChange} 
+                        name='description' 
+                        required
+                    ></textarea><br></br>
 
                     <label>Created By:</label>
-                    <input type='text' onChange={this.handleChange} name='created_by' className='form-control form-control-sm' required></input>
+                    <input 
+                        type='text' 
+                        onChange={this.handleChange} 
+                        name='created_by' 
+                        className='form-control form-control-sm' 
+                        required
+                    ></input>
                     <br></br>
 
                     <label> Status:</label>
-                    <select onChange={this.handleChange} name='status' required>
+                    <select onChange={this.handleChange} name='status' required >
                         <option>select status ...</option>
                         <option value="active">Active</option>
                         <option value="close">Close</option>
@@ -73,7 +90,7 @@ class IssueForm extends React.Component {
                     </select><br></br>                    
 
                     <label>Priority: </label>
-                    <select onChange={this.handleChange} name='priority' required>
+                    <select onChange={this.handleChange} name='priority' required >
                         <option>select priority...</option>
                         <option value="low">low</option>
                         <option value="medium">medium</option>
@@ -81,17 +98,34 @@ class IssueForm extends React.Component {
                     </select><br></br>                    
 
                     <label> Identified By: </label>
-                    <input type='text' onChange={this.handleChange} name='identified_by' className='form-control form-control-sm' required></input><br></br>
-
+                    <input 
+                        type='text' 
+                        onChange={this.handleChange} 
+                        name='identified_by' 
+                        className='form-control form-control-sm' 
+                        required
+                    ></input><br></br>
 
                     <label> Assigned To:</label>
-                    <input type='text' onChange={this.handleChange} name='assigned_to' className='form-control form-control-sm' required></input><br></br>
-
+                    <input 
+                        type='text' 
+                        onChange={this.handleChange} 
+                        name='assigned_to' 
+                        className='form-control form-control-sm' 
+                        required
+                    ></input><br></br>
 
                     <label> Issue Date:</label>
-                    <input type='date' onChange={this.handleChange} name='issue_date' required></input><br></br>                    
+                        <input 
+                        type='date' 
+                        onChange={this.handleChange} 
+                        name='issue_date' 
+                        required
+                    ></input><br></br>                    
 
-                    <button type='submit' className='btn btn-primary'>Submit</button><br></br>
+                    <button 
+                    type='submit' 
+                    className='btn btn-primary'>Submit</button><br></br>
 
                 </form>
 
