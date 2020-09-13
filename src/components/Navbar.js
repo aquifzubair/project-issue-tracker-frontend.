@@ -1,6 +1,7 @@
 import React from 'react';
 import Project from './Projects'
 import ProjectForm from './ProjectForm'
+import {Button} from 'react-bootstrap'
 
 import {
     BrowserRouter as Router,
@@ -32,20 +33,20 @@ class Navbar extends React.Component {
             <Router>
                 <div className='navbar'>
 
-                    <Link to='project'>
+                    <Link to='/project'>
                         <div>
-                            <button onClick={this.handleClick} className='btn btn-primary'>All Projects                            </button>
+                            <Button onClick={this.handleClick} variant="primary" size='sm'>All Projects                            </Button>
                         </div>
                     </Link>
 
-                        <div><button className='btn btn-primary' onClick={this.setModalShow}>New Project</button></div>
+                        <div><Button variant="primary" size='sm' onClick={this.setModalShow}>New Project</Button></div>
                     <ProjectForm
                         show={this.state.modalShow}
                         onHide={() => this.setState({ modalShow: false })} />
                 </div>
 
                 <Switch>
-                    <Route path = '/project'>
+                    <Route exact path = '/project'>
                         <Project />
                     </Route>
                 </Switch>

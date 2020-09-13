@@ -30,7 +30,7 @@ class ProjectForm extends React.Component {
                 data: this.state
             }
         )
-            .then(response => console.log(response))
+            .then(response => {console.log(response)})
             .catch(err => console.error(err))
     }
 
@@ -50,23 +50,25 @@ class ProjectForm extends React.Component {
                 </Modal.Header>
 
                     <form onSubmit={this.handleSubmit} className='form-group'>
-                        <label>
-                            Project Name:<input type='text' onChange={this.handleChange} name='name' className='form-control form-control-sm'></input>
-                        </label>
-                        <label> Created By
-                    <input type='text' onChange={this.handleChange} name='created_by' className='form-control form-control-sm'></input>
-                        </label>
-                        <label> Description: <br />
-                            <textarea type='textarea' onChange={this.handleChange} name='description'></textarea>
-                        </label>
-                        <label> Created on:<br />
-                            <input type='date' onChange={this.handleChange} name='created_on'></input>
-                        </label>
-                        <label> Completion time:<br />
-                            <input type='date' onChange={this.handleChange} name='expected_completion_time'></input>
-                        </label>
-                        <button type='submit' className='btn btn-primary'>Submit</button>
+
+                        <label>Project Name:</label>
+                            <input type='text' onChange={this.handleChange} name='name' className='form-control form-control-sm' required></input><br />
+                        
+                        <label> Created By:</label>
+                            <input type='text' onChange={this.handleChange} name='created_by' className='form-control form-control-sm' required></input><br />
+                        
+                        <label> Description:</label> 
+                            <textarea type='textarea' onChange={this.handleChange} name='description' required></textarea><br />
+                        
+                        <label> Created on:</label>
+                            <input type='date' onChange={this.handleChange} name='created_on' required></input><br />
+                        
+                        <label> Completion time:</label>
+                            <input type='date' onChange={this.handleChange} name='expected_completion_time' required></input><br />
+                        
+                        <button type='submit' className='btn btn-primary' >Submit</button><br />
                     </form>
+
                 <Modal.Footer>
                     <button onClick={this.props.onHide}>Close</button>
                 </Modal.Footer>

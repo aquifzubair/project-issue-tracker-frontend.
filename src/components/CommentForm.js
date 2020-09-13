@@ -1,12 +1,14 @@
 import React from 'react';
-// import axios from 'axios'
+import axios from 'axios'
+import {Modal} from 'react-bootstrap'
 
 class CommentForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            message:'',
             comment_by:'',
-            comment_message:''
+            issue_id:this.props.issue_id
         }
     }
 
@@ -17,33 +19,49 @@ class CommentForm extends React.Component {
         })
     }
 
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios(
-    //         {
-    //             method: 'post',
-    //             url: 'http://localhost:3001/projects/insert',
-    //             data: this.state
-    //         }
-    //     )
-    //         .then(response => console.log(response))
-    //         .catch(err => console.error(err))
-    // }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        axios(
+            {
+                method: 'post',
+                url: `http://localhost:3001/comments/insert`,
+                data: this.state
+            }
+        )
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
+    }
 
     render() {
+        console.log(this.state)
         return (
-            <div>
-                <form>
-                    <label> Comment By:
-                    <input type='text' onChange={this.handleChange} name='comment_by' className='form-control form-control-sm'></input>
-                    </label>
-                    <label> Comment:
-                    <textarea type='textarea' onChange={this.handleChange} name='comment_message' className="form-control" row='10'></textarea>
-                    </label>
+            <Modal
+                {...this.props}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        New proect form
+                </Modal.Title>
+                </Modal.Header>
+                <form onSubmit={this.handleSubmit}>
+                    <label> Comment By:</label>
+                    <input type='text' onChange={this.handleChange} name='comment_by' className='form-control form-control-sm' required></input>
+                    
+                    <label> Comment:</label>
+                    <textarea type='textarea' onChange={this.handleChange} name='message' className="form-control" row='10' required></textarea><br></br>
+                    
                     
                     <button type='submit' className='btn btn-primary'>Submit</button>
                 </form>
-            </div>
+                <Modal.Footer>
+                    <button onClick={this.props.onHide}>Close</button>
+                </Modal.Footer>
+
+            </Modal>
         )
     }
 }

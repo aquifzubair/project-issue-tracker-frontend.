@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React from 'react';
 import { Button } from 'react-bootstrap'
 import Comments from './Comments'
+import CommentForm from './CommentForm'
 
 import {
     BrowserRouter as Router,
@@ -15,8 +16,15 @@ class Issues extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            issues: []
+            issues: [],
+            modelShow:false
         }
+    }
+
+    setModalShow = () => {
+        this.setState({
+            modalShow: true
+        })
     }
 
     componentDidMount() {
@@ -43,7 +51,6 @@ class Issues extends React.Component {
 
 
     render() {
-        console.log(this.state.issues)
         const allIssues = this.state.issues.map(issue => {
             return (
                 <Router key={issue.issue_id} >
@@ -62,15 +69,26 @@ class Issues extends React.Component {
                             <p>{issue.issue_date.slice(0, 10)}</p>
                         </div>
 
+                        <div className='item'>
+                            <Link to='commentForm'>
+                            <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Comment</Button>{' '}
+                            </Link>
+                        </div>
                         <div className='item-end'>
                             <Button onClick={(e) => this.delete(issue.issue_id, e)} variant="outline-danger" size='sm'>Delete</Button>
-
                         </div>
+
                     </div>
 
                     <Switch>
-                        <Route path='/comments'>
-                            <Comments />
+                        <Route exact path='/comments'>
+                            <Comments issue_id={issue.issue_id}/>
+                        </Route>
+                        <Route exact path='/commentForm'>
+                            <CommentForm 
+                            issue_id={issue.issue_id}
+                            show={this.state.modalShow}
+                            onHide={() => this.setState({ modalShow: false })}/>
                         </Route>
                     </Switch>
                 </Router>
