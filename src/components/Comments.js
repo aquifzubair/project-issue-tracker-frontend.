@@ -1,13 +1,21 @@
 import React from 'react'
 import Axios from 'axios'
 import {Button} from 'react-bootstrap'
+import CommentEditForm from './CommentEditForm'
 
 class Comments extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            comments:[]
+            comments:[],
+            modalShow:false
         }
+    }
+
+    setModalShow = () => {
+        this.setState({
+            modalShow: true
+        })
     }
 
     componentDidMount() {
@@ -17,6 +25,7 @@ class Comments extends React.Component {
             comments:response
         }))
         .catch(err => console.error(err))
+
     }
 
     delete = (id, e) => {
@@ -36,6 +45,7 @@ class Comments extends React.Component {
 
     }
 
+
     render(){
         const allComments = this.state.comments.map(comment => {
             return (
@@ -46,8 +56,17 @@ class Comments extends React.Component {
                     </div>
 
                     <div className='item'>
-                            <Button variant="outline-secondary" size='sm'>Edit Comment</Button>
+                        <Button variant="outline-secondary" size='sm' onClick={this.setModalShow}>Edit Comment</Button>
                     </div>
+
+                    <CommentEditForm
+                                comment_id={comment.comment_id}
+                                issue_id = {comment.issue_id}
+                                message= {comment.comment_message}
+                                comment_by = {comment.comment_by}
+                                show={this.state.modalShow}
+                                onHide={() => this.setState({ modalShow: false })} 
+                    />
                     
                     <div className='item-end'>
                             <Button onClick={(e) => this.delete(comment.comment_id, e)} variant="outline-danger" size='sm'>Delete</Button>

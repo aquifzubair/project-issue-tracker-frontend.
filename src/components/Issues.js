@@ -41,7 +41,7 @@ class Issues extends React.Component {
         if (confirmation) {
             Axios({
                 method: 'delete',
-                url: `http://localhost:3001/projects/issues/${id}`,
+                url: `http://localhost:3001/issues/delete/${id}`,
             })
                 .then(response => console.log(response))
                 .catch(err => console.error(err))
@@ -129,7 +129,8 @@ class Issues extends React.Component {
                             <CommentForm
                                 issue_id={issue.issue_id}
                                 show={this.state.modalShow}
-                                onHide={() => this.setState({ modalShow: false })} />
+                                onHide={() => this.setState({ modalShow: false })} 
+                            />
                         </Route>
 
                     </Switch>
