@@ -5,9 +5,10 @@ import {Modal} from 'react-bootstrap'
 class CommentEditForm extends React.Component {
     constructor(props) {
         super(props)
+        console.log(props)
         this.state = {
-            message:this.props.message,
-            comment_by:'',
+            comment_message:this.props.message,
+            comment_by:this.props.comment_by,
             issue_id:this.props.issue_id
         }
     }
@@ -52,11 +53,10 @@ class CommentEditForm extends React.Component {
                     <textarea 
                         type='textarea'
                         onChange={this.handleChange} 
-                        name='message' 
+                        name='comment_message' 
                         className="form-control" 
                         row='10'
-                        value={this.state.message} 
-                        autoFocus
+                        value={this.state.comment_message} 
                         required
                     ></textarea><br></br>                    
                     

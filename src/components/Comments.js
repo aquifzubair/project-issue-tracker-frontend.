@@ -47,6 +47,7 @@ class Comments extends React.Component {
 
 
     render(){
+        console.log(this.state.comments)
         const allComments = this.state.comments.map(comment => {
             return (
                 <div key={comment.comment_id} className='comment'>
@@ -62,7 +63,7 @@ class Comments extends React.Component {
                     <CommentEditForm
                                 comment_id={comment.comment_id}
                                 issue_id = {comment.issue_id}
-                                message= {comment.comment_message}
+                                comment_message= {comment.comment_message}
                                 comment_by = {comment.comment_by}
                                 show={this.state.modalShow}
                                 onHide={() => this.setState({ modalShow: false })} 

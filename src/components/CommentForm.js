@@ -6,7 +6,7 @@ class CommentForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            message:'',
+            comment_message:'',
             comment_by:'',
             issue_id:this.props.issue_id
         }
@@ -60,7 +60,7 @@ class CommentForm extends React.Component {
                     <textarea 
                         type='textarea'
                         onChange={this.handleChange} 
-                        name='message' 
+                        name='comment_message' 
                         className="form-control" 
                         row='10' 
                         required
