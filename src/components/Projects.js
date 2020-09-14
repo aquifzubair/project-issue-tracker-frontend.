@@ -12,7 +12,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
 } from "react-router-dom";
 
 
@@ -22,12 +22,19 @@ class Project extends React.Component {
         this.state = {
             project: [],
             modalShow: false,
+            projectForm:false
         }
     }
 
     setModalShow = () => {
         this.setState({
             modalShow: true
+        })
+    }
+
+    setProjectForm = () => {
+        this.setState({
+            projectForm: true
         })
     }
 
@@ -68,8 +75,7 @@ class Project extends React.Component {
 
                     <div className='project'>
 
-                        <div className='item'>
-                            <Link to='/issues'>
+                        <div className='item color-green'>
                                 <OverlayTrigger
                                     placement="bottom"
                                     delay={{ show: 250, hide: 400 }}
@@ -77,31 +83,39 @@ class Project extends React.Component {
                                 >
                                     <p>{project.project_name}</p>
                                 </OverlayTrigger>    
-                            </Link>
                         </div>
 
-                        <div className='item'>
-                            <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
-                        </div>
+                        
 
                         <div className='item'>
+                            
                             <Link to='ProjectEditForm'>
-                                <Button onClick={this.setModalShow} variant="outline-secondary" size='sm'>edit</Button>
+                                <Button onClick={this.setProjectForm} variant="outline-secondary" size='sm'>edit</Button>
                             </Link>                            
                         </div>
 
-                        <div className='item item-end'>
+                        <div className='item'>
+                            <Link to='/issues' >
+                                <Button variant="outline-secondary" size='sm' >Show Issues</Button>
+                            </Link>                            
+                        </div>
+
+                        <div className='item'>
                             <Link to='issueForm'>
                                 <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Issue</Button>
                             </Link>
-                        </div>                            
+                        </div>  
+
+                        <div className='ite item-endm'>
+                            <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
+                        </div>                          
 
                     </div>
 
                     <Switch>
 
                         <Route path='/issues'>
-                            <Issues project_id={project.project_id} project_name={project.project_name} />
+                            <Issues project_id={project.project_id}/>
                         </Route>
                         <Route path='/issueForm'>
 
@@ -123,8 +137,8 @@ class Project extends React.Component {
                                 description={project.description}
                                 expected_completion_time={project.expected_completion_time}
                                 project_id={project.project_id}
-                                show={this.state.modalShow}
-                                onHide={() => this.setState({ modalShow: false })} 
+                                show={this.state.projectForm}
+                                onHide={() => this.setState({ projectForm: false })} 
                             />
 
                         </Route>

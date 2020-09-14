@@ -44,11 +44,16 @@ class Comments extends React.Component {
                     <div className='item'>
                         <p>{comment.comment_message}</p>
                     </div>
+
+                    <div className='item'>
+                            <Button variant="outline-secondary" size='sm'>Edit Comment</Button>
+                    </div>
                     
                     <div className='item-end'>
                             <Button onClick={(e) => this.delete(comment.comment_id, e)} variant="outline-danger" size='sm'>Delete</Button>
-                        </div>
                     </div>
+
+                </div>
             )
         })
         return(

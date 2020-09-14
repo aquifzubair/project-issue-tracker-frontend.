@@ -16,8 +16,9 @@ body {
 form {
   display:flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin:auto;
+  
 }
 
 .allProjects {
@@ -30,7 +31,7 @@ form {
   display:flex;
   width:80%;
   margin:auto;
-
+  padding: 10px;
 }
 
 .issues {
@@ -39,14 +40,17 @@ form {
   width:80%;
   flex-direction: column;
   margin-right:auto;
-  background-color: rgb(236, 169, 169);
+  background-color: rgb(217, 224, 230);
   flex-basis:20%;
   margin:auto;
   border-radius:10px;
+  min-height:50px;
+  margin-bottom:10px;
 }
 
 .issue{
   display:flex;
+  padding:10px;
 }
 
 .comments {
@@ -58,14 +62,14 @@ form {
   flex-basis:50%;
   margin:auto;
   border-radius:10px;
+  min-height: 50px;
 }
 
-.issue {
-  display:flex;
-}
+
 
 .comment {
   display:flex;
+  padding:10px;
 }
 .item {
   flex-basis: 100%;
@@ -77,3 +81,13 @@ form {
   text-align: right;
   margin-right:4px;
 }
+
+h3 {
+  text-align: center;
+  vertical-align:center;
+}
+
+.color-green {
+  color:greenyellow;
+}
+

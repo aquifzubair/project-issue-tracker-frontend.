@@ -30,20 +30,25 @@ class Navbar extends React.Component {
             <Router>
                 <div className='navbar'>
 
-                    <Link to='/project'>
+                    <Link to='/'>
                         <div>
                             <Button onClick={this.handleClick} variant="primary" size='sm'>All Projects</Button>
                         </div>
                     </Link>
 
-                        <div><Button variant="primary" size='sm' onClick={this.setModalShow}>New Project</Button></div>
+                    <div>
+                        <Button variant="primary" size='sm' onClick={this.setModalShow}>New Project</Button>
+                    </div>
+
                     <ProjectForm
                         show={this.state.modalShow}
-                        onHide={() => this.setState({ modalShow: false })} />
+                        onHide={() => this.setState({ modalShow: false })} 
+                    />
+
                 </div>
 
                 <Switch>
-                    <Route exact path = '/project'>
+                    <Route exact path = '/'>
                         <Project />
                     </Route>
                 </Switch>

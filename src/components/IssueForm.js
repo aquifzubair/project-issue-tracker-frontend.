@@ -41,15 +41,13 @@ class IssueForm extends React.Component {
         return (
             <Modal
                 {...this.props}
-                size="lg"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
 
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        New Issue Form
-                    </Modal.Title>
+                   
                 </Modal.Header>
 
                 <form onSubmit={this.handleSubmit}>
@@ -61,7 +59,7 @@ class IssueForm extends React.Component {
                         name='summary' 
                         className='form-control form-control-sm' 
                         required
-                    ></input><br></br>
+                    ></input>
 
                     <label> description:</label>
                         <textarea 
@@ -69,7 +67,7 @@ class IssueForm extends React.Component {
                         onChange={this.handleChange} 
                         name='description' 
                         required
-                    ></textarea><br></br>
+                    ></textarea>
 
                     <label>Created By:</label>
                     <input 
@@ -79,7 +77,7 @@ class IssueForm extends React.Component {
                         className='form-control form-control-sm' 
                         required
                     ></input>
-                    <br></br>
+                    
 
                     <label> Status:</label>
                     <select onChange={this.handleChange} name='status' required >
@@ -87,7 +85,7 @@ class IssueForm extends React.Component {
                         <option value="active">Active</option>
                         <option value="close">Close</option>
                         <option value="progress">progress</option>
-                    </select><br></br>                    
+                    </select>                    
 
                     <label>Priority: </label>
                     <select onChange={this.handleChange} name='priority' required >
@@ -95,7 +93,7 @@ class IssueForm extends React.Component {
                         <option value="low">low</option>
                         <option value="medium">medium</option>
                         <option value="high">high</option>
-                    </select><br></br>                    
+                    </select>                    
 
                     <label> Identified By: </label>
                     <input 
@@ -104,7 +102,7 @@ class IssueForm extends React.Component {
                         name='identified_by' 
                         className='form-control form-control-sm' 
                         required
-                    ></input><br></br>
+                    ></input>
 
                     <label> Assigned To:</label>
                     <input 
@@ -113,7 +111,7 @@ class IssueForm extends React.Component {
                         name='assigned_to' 
                         className='form-control form-control-sm' 
                         required
-                    ></input><br></br>
+                    ></input>
 
                     <label> Issue Date:</label>
                         <input 
@@ -121,17 +119,13 @@ class IssueForm extends React.Component {
                         onChange={this.handleChange} 
                         name='issue_date' 
                         required
-                    ></input><br></br>                    
+                    ></input>                 
 
                     <button 
                     type='submit' 
-                    className='btn btn-primary'>Submit</button><br></br>
+                    className='btn btn-primary'>Submit</button>
 
                 </form>
-
-                <Modal.Footer>
-                    <button onClick={this.props.onHide}>Close</button>
-                </Modal.Footer>
 
             </Modal>
         )

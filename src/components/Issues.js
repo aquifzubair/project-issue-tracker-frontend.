@@ -23,6 +23,7 @@ class Issues extends React.Component {
         }
     }
 
+    
     setModalShow = () => {
         this.setState({
             modalShow: true
@@ -51,9 +52,10 @@ class Issues extends React.Component {
 
     }
 
-    renderTooltip = (props, createdBy, description, assignedTo) => (
+    renderTooltip = (props, createdBy, description, assignedTo,createdOn) => (
         <Tooltip id="button-tooltip" {...props}>
             <b>Created By:-</b> {createdBy} <br></br>
+            <b>Created On:-</b> {createdOn} <br></br>
             <b>Assigned To:-</b> {assignedTo} <br></br>
             <b>description:-</b> {description}
         </Tooltip>
@@ -82,15 +84,13 @@ class Issues extends React.Component {
                     <div className='issue'>
 
                         <div className='item'>
-                            <Link to='/comments'>
                                 <OverlayTrigger
                                     placement="bottom"
                                     delay={{ show: 250, hide: 400 }}
-                                    overlay={this.renderTooltip(this.props, issue.identified_by, issue.issue_description, issue.assigned_to)}
+                                    overlay={this.renderTooltip(this.props, issue.identified_by, issue.issue_description, issue.assigned_to, issue.issue_date.slice(0,10))}
                                 >
                                     <p>{issue.issue_summary}</p>
                                 </OverlayTrigger>
-                            </Link>
                         </div>
 
                         <div className='item'>
@@ -102,7 +102,9 @@ class Issues extends React.Component {
                         </div>
 
                         <div className='item'>
-                            <p>{issue.issue_date.slice(0, 10)}</p>
+                            <Link to='comments'>
+                                <Button variant="outline-secondary" size='sm' onClick={this.setModalShow}>Show Comments</Button>{' '}
+                            </Link>
                         </div>
 
                         <div className='item'>
@@ -136,8 +138,7 @@ class Issues extends React.Component {
         })
         return (
             <div className='issues'>
-                <h5>Issues in {this.props.project_name}</h5>
-                <hr></hr>
+                {allIssues.length > 0 ? null :(<h3>No Issues</h3>) }
                 {allIssues}
             </div>
         )
