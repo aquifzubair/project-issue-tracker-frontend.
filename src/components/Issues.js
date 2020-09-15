@@ -87,7 +87,6 @@ class Issues extends React.Component {
 
 
     render() {
-        console.log(this.state)
         const allIssues = this.state.issues.map(issue => {
             return (
                 <Router key={issue.issue_id} >

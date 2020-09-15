@@ -50,7 +50,7 @@ class CommentForm extends React.Component {
 
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        New proect form
+                        Add new Comment
                 </Modal.Title>
                 </Modal.Header>
                 <form onSubmit={this.handleSubmit}>
