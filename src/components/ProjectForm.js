@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios'
+import axios from './../utils/API';
 import { Modal } from 'react-bootstrap';
 
 class ProjectForm extends React.Component {
@@ -26,12 +26,19 @@ class ProjectForm extends React.Component {
         axios(
             {
                 method: `post`,
-                url: `http://localhost:3001/projects/insert`,
+                url: `/projects/insert`,
                 data: this.state
             }
         )
-        .then(response => {console.log(response)})
-        .catch(err => console.error(err))
+        .then(response => {
+            console.log(response)
+            alert(response.data.message)
+            this.props.onHide()                
+        })
+        .catch(err => {
+            console.error(err)
+            alert(err)
+        })
     }
 
     render() {
@@ -45,7 +52,7 @@ class ProjectForm extends React.Component {
 
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        New proect form
+                        New project form
                 </Modal.Title>
                 </Modal.Header>
 

@@ -1,7 +1,8 @@
 import React from 'react'
-import Axios from 'axios'
+import axios from './../utils/API';
 import {Button} from 'react-bootstrap'
 import CommentEditForm from './CommentEditForm'
+import {OverlayTrigger,Tooltip} from 'react-bootstrap'
 
 class Comments extends React.Component {
     constructor(props){
@@ -19,11 +20,9 @@ class Comments extends React.Component {
     }
 
     componentDidMount() {
-        Axios.get(`http://localhost:3001/comments/${this.props.issue_id}`)
+        axios.get(`/comments/${this.props.issue_id}`)
         .then(response => response.data)
-        .then(response => this.setState({
-            comments:response
-        }))
+        .then(response => this.setState({comments:response}))
         .catch(err => console.error(err))
 
     }
@@ -32,10 +31,7 @@ class Comments extends React.Component {
         console.log(id)
         const confirmation = window.confirm('Do you wanna delete this comment');
         if (confirmation) {
-            Axios({
-                method: 'delete',
-                url: `http://localhost:3001/comments/delete/${id}`,
-            })
+            axios.delete(`/comments/delete/${id}`)
             .then(response => console.log(response))
             .catch(err => console.error(err))
 
@@ -45,6 +41,12 @@ class Comments extends React.Component {
 
     }
 
+    renderTooltip = (props, commentBy) => (
+        <Tooltip id="button-tooltip" {...props}>
+        <b>Comment By:-</b> {commentBy} <br></br>
+        </Tooltip>
+      );
+
 
     render(){
         console.log(this.state.comments)
@@ -53,8 +55,14 @@ class Comments extends React.Component {
                 <div key={comment.comment_id} className='comment'>
                     
                     <div className='item'>
-                        <p>{comment.comment_message}</p>
-                    </div>
+                                <OverlayTrigger
+                                    placement="top"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={this.renderTooltip(this.props,comment.comment_by)}
+                                >
+                                   <p>{comment.comment_message}</p>
+                                </OverlayTrigger>    
+                        </div>
 
                     <div className='item'>
                         <Button variant="outline-secondary" size='sm' onClick={this.setModalShow}>Edit Comment</Button>

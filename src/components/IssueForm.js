@@ -1,19 +1,19 @@
 import React from 'react';
-import axios from 'axios'
+import axios from './../utils/API';
 import { Modal } from 'react-bootstrap';
 
 class IssueForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            summary: '',
-            description: '',
-            status: '',
+            issue_summary: '',
+            issue_description: '',
+            issue_status: '',
             identified_by: '',
             assigned_to: '',
             issue_date: '',
             project_id: this.props.project_id,
-            priority: ''
+            issue_priority: ''
         }
     }
 
@@ -29,12 +29,19 @@ class IssueForm extends React.Component {
         axios(
             {
                 method: 'post',
-                url: 'http://localhost:3001/issues/insert',
+                url: '/issues/insert',
                 data: this.state
             }
         )
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+        .then(response => {
+            console.log(response)
+            alert(response.data.message)
+            this.props.onHide()                
+        })
+        .catch(err => {
+            console.error(err)
+            alert(err)
+        })
     }
 
     render() {
@@ -56,7 +63,7 @@ class IssueForm extends React.Component {
                     <input 
                         type='text' 
                         onChange={this.handleChange} 
-                        name='summary' 
+                        name='issue_summary' 
                         className='form-control form-control-sm' 
                         required
                     ></input>
@@ -65,7 +72,7 @@ class IssueForm extends React.Component {
                         <textarea 
                         type='textarea' 
                         onChange={this.handleChange} 
-                        name='description' 
+                        name='issue_description' 
                         required
                     ></textarea>
 
@@ -80,7 +87,7 @@ class IssueForm extends React.Component {
                     
 
                     <label> Status:</label>
-                    <select onChange={this.handleChange} name='status' required >
+                    <select onChange={this.handleChange} name='issue_status' required >
                         <option>select status ...</option>
                         <option value="active">Active</option>
                         <option value="close">Close</option>
@@ -88,7 +95,7 @@ class IssueForm extends React.Component {
                     </select>                    
 
                     <label>Priority: </label>
-                    <select onChange={this.handleChange} name='priority' required >
+                    <select onChange={this.handleChange} name='issue_priority' required >
                         <option>select priority...</option>
                         <option value="low">low</option>
                         <option value="medium">medium</option>
@@ -119,11 +126,9 @@ class IssueForm extends React.Component {
                         onChange={this.handleChange} 
                         name='issue_date' 
                         required
-                    ></input>                 
+                    ></input>  <br></br>               
 
-                    <button 
-                    type='submit' 
-                    className='btn btn-primary'>Submit</button>
+                    <button type='submit' className='btn btn-primary'>Submit</button><br></br>
 
                 </form>
 

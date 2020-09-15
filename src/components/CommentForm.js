@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios'
+import axios from './../utils/API';
 import {Modal} from 'react-bootstrap'
 
 class CommentForm extends React.Component {
@@ -24,12 +24,19 @@ class CommentForm extends React.Component {
         axios(
             {
                 method: 'post',
-                url: `http://localhost:3001/comments/insert`,
+                url: `/comments/insert`,
                 data: this.state
             }
         )
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
+        .then(response => {
+            console.log(response)
+            alert(response.data.message)
+            this.props.onHide()                
+        })
+        .catch(err => {
+            console.error(err)
+            alert(err)
+        })
     }
 
     render() {

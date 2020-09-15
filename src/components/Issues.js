@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from './../utils/API';
 import React from 'react';
 import { Button } from 'react-bootstrap'
 import Comments from './Comments'
@@ -31,7 +31,7 @@ class Issues extends React.Component {
     }
 
     componentDidMount() {
-        Axios.get(`http://localhost:3001/issues/${this.props.project_id}`)
+        axios.get(`/issues/${this.props.project_id}`)
             .then(data => data.data)
             .then(data => this.setState({ issues: data }))
     }
@@ -39,10 +39,7 @@ class Issues extends React.Component {
     delete = (id, e) => {
         const confirmation = window.confirm('Do you wanna delete this issue');
         if (confirmation) {
-            Axios({
-                method: 'delete',
-                url: `http://localhost:3001/issues/delete/${id}`,
-            })
+            axios.delete(`/issues/delete/${id}`)
                 .then(response => console.log(response))
                 .catch(err => console.error(err))
 
@@ -62,21 +59,35 @@ class Issues extends React.Component {
     );
 
     handleChange = (id,e) => {
-        Axios({
+        console.log(e.target.value)
+        axios({
             method:'put',
-            url:`http://localhost:3001/issues/status/${id}`,
-            data:{status:e.target.value}
+            url:`/issues/status/${id}`,
+            data:{issue_status:`${e.target.value}`}
         })
         .then(response => console.log(response))
         .catch(err => console.error(err))
 
         this.setState({
-            statusUpdate:true
+            statusUpdate:!this.state.statusUpdate
         })
     } 
 
+    componentDidUpdate(){
+        if(this.state.statusUpdate){
+            axios.get(`/issues/${this.props.project_id}`)
+            .then(data => data.data)
+            .then(data => this.setState({
+                 issues: data,
+                 statusUpdate:!this.state.statusUpdate
+            }))
+            .catch(err => console.error(err))
+        }
+    }
+
 
     render() {
+        console.log(this.state)
         const allIssues = this.state.issues.map(issue => {
             return (
                 <Router key={issue.issue_id} >

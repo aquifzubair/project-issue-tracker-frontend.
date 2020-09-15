@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios'
+import axios from './../utils/API';
 import {Modal} from 'react-bootstrap'
 
 class CommentEditForm extends React.Component {
@@ -7,7 +7,7 @@ class CommentEditForm extends React.Component {
         super(props)
         console.log(props)
         this.state = {
-            comment_message:this.props.message,
+            comment_message:this.props.comment_message,
             comment_by:this.props.comment_by,
             issue_id:this.props.issue_id
         }
@@ -25,12 +25,19 @@ class CommentEditForm extends React.Component {
         axios(
             {
                 method: 'put',
-                url: `http://localhost:3001/comments/update/${this.props.comment_id}`,
+                url: `/comments/update/${this.props.comment_id}`,
                 data: this.state
             }
         )
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
+        .then(response => {
+            console.log(response)
+            alert(response.data.message)
+            this.props.onHide()                
+        })
+        .catch(err => {
+            console.error(err)
+            alert(err)
+        })
     }
 
     render() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from './../utils/API';
 
 import Issues from './Issues';
 import IssueForm from './IssueForm'
@@ -39,7 +39,7 @@ class Project extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/projects')
+        axios.get('/projects')
             .then(data => data.data)
             .then(data => this.setState({ project: data }))
     }
@@ -47,10 +47,7 @@ class Project extends React.Component {
     delete = (id, e) => {
         const confirmation = window.confirm('Do you wanna delete this project');
         if (confirmation) {
-            axios({
-                method: 'delete',
-                url: `http://localhost:3001/projects/delete/${id}`,
-            })
+            axios.delete(`/projects/delete/${id}`)
             .then(response => console.log(response))
             .catch(err => console.error(err))
 
@@ -117,6 +114,7 @@ class Project extends React.Component {
                         <Route path='/issues'>
                             <Issues project_id={project.project_id}/>
                         </Route>
+                        
                         <Route path='/issueForm'>
 
                             <IssueForm
