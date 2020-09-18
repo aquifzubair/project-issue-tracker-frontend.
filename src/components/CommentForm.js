@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from './../utils/API';
-import {Modal} from 'react-bootstrap'
 
 class CommentForm extends React.Component {
     constructor(props) {
@@ -8,7 +7,7 @@ class CommentForm extends React.Component {
         this.state = {
             comment_message:'',
             comment_by:'',
-            issue_id:this.props.issue_id
+            issue_id:this.props.match.params.id
         }
     }
 
@@ -31,7 +30,6 @@ class CommentForm extends React.Component {
         .then(response => {
             console.log(response)
             alert(response.data.message)
-            this.props.onHide()                
         })
         .catch(err => {
             console.error(err)
@@ -40,20 +38,10 @@ class CommentForm extends React.Component {
     }
 
     render() {
+        console.log(this.props.match.params.id)
         return (
-            <Modal
-                {...this.props}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Add new Comment
-                </Modal.Title>
-                </Modal.Header>
-                <form onSubmit={this.handleSubmit}>
+            
+                <form onSubmit={this.handleSubmit} className='text-light'>
                     <label> Comment By:</label>
                     <input 
                         type='text' 
@@ -63,7 +51,7 @@ class CommentForm extends React.Component {
                         required
                     ></input>
                     
-                    <label> Comment:</label>
+                    <label> Comment Message</label>
                     <textarea 
                         type='textarea'
                         onChange={this.handleChange} 
@@ -76,11 +64,7 @@ class CommentForm extends React.Component {
                     <button type='submit' className='btn btn-primary'>Submit</button>
                     
                 </form>
-                <Modal.Footer>
-                    <button onClick={this.props.onHide}>Close</button>
-                </Modal.Footer>
-
-            </Modal>
+               
         )
     }
 }

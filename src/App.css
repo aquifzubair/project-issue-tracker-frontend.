@@ -18,6 +18,8 @@ form {
   flex-direction: column;
   justify-content: space-evenly;
   margin:auto;
+  width:30%;
+  margin:auto;
   
 }
 
@@ -51,15 +53,16 @@ form {
 .issue{
   display:flex;
   padding:10px;
+  flex-basis:16.66%;
 }
 
 .comments {
   display:flex;
   justify-content: space-around;
-  width:100%;
+  width:80%;
   flex-direction: column;
   background-color: rgb(143, 233, 161);
-  flex-basis:50%;
+  flex-basis:20%;
   margin:auto;
   border-radius:10px;
   min-height: 50px;
@@ -71,6 +74,7 @@ form {
 .comment {
   display:flex;
   padding:10px;
+  flex-basis:20%;
 }
 .item {
   flex-basis: 100%;
@@ -92,3 +96,15 @@ h3 {
   color:greenyellow;
 }
 
+.item2 {
+  margin-right:100px;  
+}
+
+.edit{
+  margin-right:20px;
+  flex:1;
+}
+
+.text-bold{
+  font-weight:600;
+}
