@@ -1,19 +1,11 @@
 import React from 'react';
 import axios from './../utils/API';
 
-import Issues from './Issues';
-import IssueForm from './IssueForm'
-import ProjectEditForm from './projectEditForm'
+import { Button } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Button } from 'react-bootstrap'
-import {OverlayTrigger,Tooltip} from 'react-bootstrap'
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+import ProjectEditForm from './projectEditForm';
 
 
 class Project extends React.Component {
@@ -21,15 +13,8 @@ class Project extends React.Component {
         super(props)
         this.state = {
             project: [],
-            modalShow: false,
-            projectForm:false
+            projectForm: false
         }
-    }
-
-    setModalShow = () => {
-        this.setState({
-            modalShow: true
-        })
     }
 
     setProjectForm = () => {
@@ -40,8 +25,8 @@ class Project extends React.Component {
 
     componentDidMount() {
         axios.get('/projects')
-            .then(data => data.data)
-            .then(data => this.setState({ project: data }))
+        .then(data => data.data)
+        .then(data => this.setState({ project: data }))
     }
 
     delete = (id, e) => {
@@ -57,93 +42,55 @@ class Project extends React.Component {
 
     }
 
-    renderTooltip = (props, name, description) => (
+    renderTooltip = (props, name, createdOn) => (
         <Tooltip id="button-tooltip" {...props}>
-        <b>Created By:-</b> {name} <br></br>
-        <b>description:-</b> {description}
+            <b>Created By:-</b> {name} <br></br>
+            <b>Created On:-</b> {createdOn}
         </Tooltip>
-      );
+    );
 
-    
+
     render() {
         let allProjects = this.state.project.map(project => {
             return (
-                <Router key={project.project_id}>
+                <div className='project' key={project.project_id}>
 
-                    <div className='project'>
-
-                        <div className='item color-green'>
-                                <OverlayTrigger
-                                    placement="bottom"
-                                    delay={{ show: 250, hide: 400 }}
-                                    overlay={this.renderTooltip(this.props,project.created_by, project.description)}
-                                >
-                                    <p>{project.project_name}</p>
-                                </OverlayTrigger>    
-                        </div>
-
-                        
-
-                        <div className='item'>
-                            
-                            <Link to='ProjectEditForm'>
-                                <Button onClick={this.setProjectForm} variant="outline-secondary" size='sm'>edit</Button>
-                            </Link>                            
-                        </div>
-
-                        <div className='item'>
-                            <Link to='/issues' >
-                                <Button variant="outline-secondary" size='sm' >Show Issues</Button>
-                            </Link>                            
-                        </div>
-
-                        <div className='item'>
-                            <Link to='issueForm'>
-                                <Button variant="outline-primary" size='sm' onClick={this.setModalShow}>New Issue</Button>
+                    <div className='item'>
+                        <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={this.renderTooltip(this.props, project.created_by, project.created_on)}   >
+                            <Link to={`/issue/${project.project_id}`} >
+                                <p className='text-bold'>{project.project_name}</p>
                             </Link>
-                        </div>  
 
-                        <div className='ite item-endm'>
-                            <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
-                        </div>                          
-
+                        </OverlayTrigger>
                     </div>
 
-                    <Switch>
+                    <div className='item item2 color-green'>
+                        <p >{project.description}</p>
+                    </div>
 
-                        <Route path='/issues'>
-                            <Issues project_id={project.project_id}/>
-                        </Route>
-                        
-                        <Route path='/issueForm'>
+                    <div className='item edit'>
+                        <Button variant="outline-secondary" onClick={this.setProjectForm} size='sm' >Edit</Button>
+                    </div>
 
-                            <IssueForm
-                                method='insert'
-                                project_id={project.project_id}
-                                show={this.state.modalShow}
-                                onHide={() => this.setState({ modalShow: false })} 
-                            />
+                    <div className='ite item-end'>
+                        <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
+                    </div>
 
-                        </Route>
+                    <ProjectEditForm
+                        created_on={project.created_on}
+                        project_name={project.project_name}
+                        created_by={project.created_by}
+                        description={project.description}
+                        expected_completion_time={project.expected_completion_time}
+                        project_id={project.project_id}
+                        show={this.state.projectForm}
+                        onHide={() => this.setState({ projectForm: false })}
+                    />
 
-                        <Route path='/ProjectEditForm'>
-
-                            <ProjectEditForm
-                                created_on={project.created_on}
-                                project_name={project.project_name}
-                                created_by={project.created_by}
-                                description={project.description}
-                                expected_completion_time={project.expected_completion_time}
-                                project_id={project.project_id}
-                                show={this.state.projectForm}
-                                onHide={() => this.setState({ projectForm: false })} 
-                            />
-
-                        </Route>
-
-                    </Switch>
-                    
-                </Router>
+                </div>
 
             )
         })

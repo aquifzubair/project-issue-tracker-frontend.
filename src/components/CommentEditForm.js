@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from './../utils/API';
-import {Modal} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap';
 
 class CommentEditForm extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ class CommentEditForm extends React.Component {
 
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        New proect form
+                        Edit Comment form
                 </Modal.Title>
                 </Modal.Header>
                 <form onSubmit={this.handleSubmit}>

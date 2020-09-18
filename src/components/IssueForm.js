@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from './../utils/API';
-import { Modal } from 'react-bootstrap';
 
 class IssueForm extends React.Component {
     constructor(props) {
         super(props)
+        console.log(this.props)
         this.state = {
             issue_summary: '',
             issue_description: '',
@@ -12,7 +12,7 @@ class IssueForm extends React.Component {
             identified_by: '',
             assigned_to: '',
             issue_date: '',
-            project_id: this.props.project_id,
+            project_id: this.props.match.params.id,
             issue_priority: ''
         }
     }
@@ -36,7 +36,6 @@ class IssueForm extends React.Component {
         .then(response => {
             console.log(response)
             alert(response.data.message)
-            this.props.onHide()                
         })
         .catch(err => {
             console.error(err)
@@ -46,93 +45,80 @@ class IssueForm extends React.Component {
 
     render() {
         return (
-            <Modal
-                {...this.props}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
+            <form onSubmit={this.handleSubmit} className='text-light '>
 
-                <Modal.Header closeButton>
-                   
-                </Modal.Header>
+                <label> Issue Name:</label>
+                <input
+                    type='text'
+                    onChange={this.handleChange}
+                    name='issue_summary'
+                    className='form-control form-control-sm'
+                    required
+                ></input>
 
-                <form onSubmit={this.handleSubmit}>
+                <label> description:</label>
+                <textarea
+                    type='textarea'
+                    onChange={this.handleChange}
+                    name='issue_description'
+                    required
+                ></textarea>
 
-                    <label> Issue Name:</label>
-                    <input 
-                        type='text' 
-                        onChange={this.handleChange} 
-                        name='issue_summary' 
-                        className='form-control form-control-sm' 
-                        required
-                    ></input>
+                <label>Created By:</label>
+                <input
+                    type='text'
+                    onChange={this.handleChange}
+                    name='created_by'
+                    className='form-control form-control-sm'
+                    required
+                ></input>
 
-                    <label> description:</label>
-                        <textarea 
-                        type='textarea' 
-                        onChange={this.handleChange} 
-                        name='issue_description' 
-                        required
-                    ></textarea>
 
-                    <label>Created By:</label>
-                    <input 
-                        type='text' 
-                        onChange={this.handleChange} 
-                        name='created_by' 
-                        className='form-control form-control-sm' 
-                        required
-                    ></input>
-                    
+                <label> Status:</label>
+                <select onChange={this.handleChange} name='issue_status' required >
+                    <option>select status ...</option>
+                    <option value="active">Active</option>
+                    <option value="close">Close</option>
+                    <option value="progress">progress</option>
+                </select>
 
-                    <label> Status:</label>
-                    <select onChange={this.handleChange} name='issue_status' required >
-                        <option>select status ...</option>
-                        <option value="active">Active</option>
-                        <option value="close">Close</option>
-                        <option value="progress">progress</option>
-                    </select>                    
+                <label>Priority: </label>
+                <select onChange={this.handleChange} name='issue_priority' required >
+                    <option>select priority...</option>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
 
-                    <label>Priority: </label>
-                    <select onChange={this.handleChange} name='issue_priority' required >
-                        <option>select priority...</option>
-                        <option value="low">low</option>
-                        <option value="medium">medium</option>
-                        <option value="high">high</option>
-                    </select>                    
+                <label> Identified By: </label>
+                <input
+                    type='text'
+                    onChange={this.handleChange}
+                    name='identified_by'
+                    className='form-control form-control-sm'
+                    required
+                ></input>
 
-                    <label> Identified By: </label>
-                    <input 
-                        type='text' 
-                        onChange={this.handleChange} 
-                        name='identified_by' 
-                        className='form-control form-control-sm' 
-                        required
-                    ></input>
+                <label> Assigned To:</label>
+                <input
+                    type='text'
+                    onChange={this.handleChange}
+                    name='assigned_to'
+                    className='form-control form-control-sm'
+                    required
+                ></input>
 
-                    <label> Assigned To:</label>
-                    <input 
-                        type='text' 
-                        onChange={this.handleChange} 
-                        name='assigned_to' 
-                        className='form-control form-control-sm' 
-                        required
-                    ></input>
+                <label> Issue Date:</label>
+                <input
+                    type='date'
+                    onChange={this.handleChange}
+                    name='issue_date'
+                    required
+                ></input>  <br></br>
 
-                    <label> Issue Date:</label>
-                        <input 
-                        type='date' 
-                        onChange={this.handleChange} 
-                        name='issue_date' 
-                        required
-                    ></input>  <br></br>               
+                <button type='submit' className='btn btn-primary btn-sm'>Submit</button><br></br>
 
-                    <button type='submit' className='btn btn-primary'>Submit</button><br></br>
-
-                </form>
-
-            </Modal>
+            </form>
         )
     }
 }
