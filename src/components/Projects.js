@@ -7,27 +7,30 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import ProjectEditForm from './projectEditForm';
 
+import {connect} from 'react-redux';
+import store from '../store'
+// import { getProjects, loadProjects } from '../actions/action';
+
 
 class Project extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            project: [],
-            projectForm: false
-        }
-    }
 
     setProjectForm = () => {
-        this.setState({
-            projectForm: true
+        store.dispatch({
+            type:'SET_PROJECT_FORM',
         })
     }
 
     componentDidMount() {
         axios.get('/projects')
         .then(data => data.data)
-        .then(data => this.setState({ project: data }))
+        .then(data => store.dispatch({
+            type:'GET_PROJECTS',
+            data:data
+        }))
+
+        
     }
+    
 
     delete = (id, e) => {
         const confirmation = window.confirm('Do you wanna delete this project');
@@ -51,7 +54,7 @@ class Project extends React.Component {
 
 
     render() {
-        let allProjects = this.state.project.map(project => {
+        let allProjects = this.props.projects.allProjects.map(project => {
             return (
                 <div className='project' key={project.project_id}>
 
@@ -86,8 +89,8 @@ class Project extends React.Component {
                         description={project.description}
                         expected_completion_time={project.expected_completion_time}
                         project_id={project.project_id}
-                        show={this.state.projectForm}
-                        onHide={() => this.setState({ projectForm: false })}
+                        show={this.props.projects.projectForm}
+                        onHide={() => store.dispatch({ type:'SET_PROJECT_FORM' })}
                     />
 
                 </div>
@@ -103,4 +106,10 @@ class Project extends React.Component {
     }
 }
 
-export default Project;
+const mapStateToProps = state => {
+    return{
+        projects:state.projectReducer.projects
+    }
+}
+
+export default connect(mapStateToProps)(Project);
