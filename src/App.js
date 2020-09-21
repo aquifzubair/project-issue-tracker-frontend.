@@ -13,10 +13,12 @@ import Project from './components/Projects'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './store'
+import ProjectEditForm from './components/projectEditForm';
+import CommentEditForm from './components/CommentEditForm';
 
 const App = () => {
   return (
-    <Provider store={ store }>
+    <Provider store={store}>
 
       <Router>
         <Navbar />
@@ -31,6 +33,9 @@ const App = () => {
 
           <Route exact path={`/commentForm/:id`} component={CommentForm}></Route>
           <Route exact path={`/issue/:id`} component={Issues}></Route>
+
+          <Route exact path={`/editProject/:id/:name/:createdOn/:createdBy/:description/:expectedDate`} component={ProjectEditForm} ></Route>
+          <Route exact path={`/editComment/:id/:issueId/:message/:commentBy`} component = {CommentEditForm}></Route>
 
         </Switch>
       </Router>

@@ -1,36 +1,22 @@
 import React from 'react'
 import axios from './../utils/API';
 import { Button } from 'react-bootstrap';
-import CommentEditForm from './CommentEditForm';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Comments extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            modalShow: false
-        }
-    }
-
-    setModalShow = () => {
-        this.setState({modalShow:true})
-    }
 
     componentDidMount() {
         axios.get(`/comments/${this.props.match.params.id}`)
             .then(response => response.data)
             .then(response => {
                 this.props.dispatch({
-                    type:'GET_COMMENTS',
-                    data:response
+                    type: 'GET_COMMENTS',
+                    data: response
                 })
             })
             .catch(err => console.error(err))
-        
-             
-
     }
 
     delete = (id, e) => {
@@ -38,13 +24,13 @@ class Comments extends React.Component {
         const confirmation = window.confirm('Do you wanna delete this comment');
         if (confirmation) {
             axios.delete(`/comments/delete/${id}`)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
+                .then(response => console.log(response))
+                .catch(err => console.error(err))
 
             const filterComments = this.props.comments.allComments.filter(comment => comment.comment_id !== id)
             this.props.dispatch({
-                type:'GET_COMMENTS',
-                data:filterComments
+                type: 'GET_COMMENTS',
+                data: filterComments
             })
         }
 
@@ -77,7 +63,10 @@ class Comments extends React.Component {
                     </div>
 
                     <div className='item'>
-                        <Button variant="outline-secondary" size='sm' onClick={() => this.setModalShow()}>Edit Comment</Button>
+                        <Link to={`/editComment/${comment.comment_id}/${comment.issue_id}/${comment.comment_message}/${comment.comment_by}`}>
+                            <Button variant="outline-secondary" size='sm' >Edit Comment</Button>
+
+                        </Link>
                     </div>
 
                     <div className='item'>
@@ -86,14 +75,7 @@ class Comments extends React.Component {
                         </Link>
                     </div>
 
-                    <CommentEditForm
-                        comment_id={comment.comment_id}
-                        issue_id={comment.issue_id}
-                        comment_message={comment.comment_message}
-                        comment_by={comment.comment_by}
-                        show={this.state.modalShow}
-                        onHide={() => this.setState({modalShow:false})}
-                    />
+
 
                     <div className='item-end'>
                         <Button onClick={(e) => this.delete(comment.comment_id, e)} variant="outline-danger" size='sm'>Delete</Button>
@@ -103,7 +85,7 @@ class Comments extends React.Component {
             )
         })
 
-        let newCommentButton = 
+        let newCommentButton =
             (<div className='comment'>
                 <div className='item'>There is no any comment, you can add by clicking on the button</div>
                 <Link to={`/commentForm/${this.props.match.params.id}`} className='item item-end'>
@@ -121,7 +103,7 @@ class Comments extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        comments:state.commentReducer.comments
+        comments: state.commentReducer.comments
     }
 }
 

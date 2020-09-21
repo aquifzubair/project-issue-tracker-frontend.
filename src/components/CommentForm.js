@@ -30,6 +30,11 @@ class CommentForm extends React.Component {
         .then(response => {
             console.log(response)
             alert(response.data.message)
+            this.setState({
+                comment_message:'',
+                comment_by:'',
+                issue_id:''
+            })
         })
         .catch(err => {
             console.error(err)

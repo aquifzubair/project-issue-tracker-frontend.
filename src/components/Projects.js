@@ -5,7 +5,6 @@ import { Button } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { Link } from "react-router-dom";
-import ProjectEditForm from './projectEditForm';
 
 import {connect} from 'react-redux';
 
@@ -20,12 +19,6 @@ class Project extends React.Component {
             type:'GET_PROJECTS',
             data:data
         }))        
-    }
-
-    setProjectForm = () => {
-        this.props.dispatch({
-            type:'SET_PROJECT_FORM',
-        })
     }
     
 
@@ -75,23 +68,14 @@ class Project extends React.Component {
                     </div>
 
                     <div className='item edit'>
-                        <Button variant="outline-secondary" onClick={this.setProjectForm} size='sm' >Edit</Button>
+                        <Link to={`/editProject/${project.project_id}/${project.project_name}/${project.created_on}/${project.created_by}/${project.description}/${project.expected_completion_time}`} >
+                            <Button variant="outline-secondary"  size='sm' >Edit</Button>
+                        </Link>
                     </div>
 
                     <div className='ite item-end'>
                         <Button onClick={(e) => this.delete(project.project_id, e)} variant="outline-danger" size='sm'>delete</Button>
                     </div>
-
-                    <ProjectEditForm
-                        created_on={project.created_on}
-                        project_name={project.project_name}
-                        created_by={project.created_by}
-                        description={project.description}
-                        expected_completion_time={project.expected_completion_time}
-                        project_id={project.project_id}
-                        show={this.props.projects.projectForm}
-                        onHide={() => this.props.dispatch({ type:'SET_PROJECT_FORM' })}
-                    />
 
                 </div>
 
@@ -108,7 +92,7 @@ class Project extends React.Component {
 
 const mapStateToProps = state => {
     return{
-        projects:state.projectReducer.projects
+        projects:state.projectReducer.projects,
     }
 }
 
