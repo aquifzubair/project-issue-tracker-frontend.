@@ -1,5 +1,4 @@
-import {GET_PROJECTS} from '../actions/actionTypes'
-import { SET_PROJECT_FORM } from '../actions/actionTypes'
+import {GET_PROJECTS, SET_PROJECT_FORM } from '../actions/actionTypes'
 
 const initialState = {
     projects:{

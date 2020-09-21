@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from './../utils/API';
 import { Modal } from 'react-bootstrap';
+import {connect} from 'react-redux'
+import store from '../store'
 
 class ProjectForm extends React.Component {
     constructor(props) {
@@ -31,9 +33,17 @@ class ProjectForm extends React.Component {
             }
         )
         .then(response => {
-            console.log(response)
+            axios.get('/projects')
+            .then(data => data.data)
+            .then(data => store.dispatch({
+            type:'GET_PROJECTS',
+            data:data
+        }))
+        .then(()=>{
             alert(response.data.message)
-            this.props.onHide()                
+            this.props.onHide()
+        })
+                            
         })
         .catch(err => {
             console.error(err)
@@ -112,4 +122,10 @@ class ProjectForm extends React.Component {
     }
 }
 
-export default ProjectForm;
+const mapStateToProps = state => {
+    return{
+        projects:state.projectReducer.projects
+    }
+}
+
+export default connect(mapStateToProps)(ProjectForm);

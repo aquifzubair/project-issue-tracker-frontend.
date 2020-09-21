@@ -8,27 +8,24 @@ import { Link } from "react-router-dom";
 import ProjectEditForm from './projectEditForm';
 
 import {connect} from 'react-redux';
-import store from '../store'
-// import { getProjects, loadProjects } from '../actions/action';
 
 
 class Project extends React.Component {
 
-    setProjectForm = () => {
-        store.dispatch({
-            type:'SET_PROJECT_FORM',
-        })
-    }
 
     componentDidMount() {
         axios.get('/projects')
         .then(data => data.data)
-        .then(data => store.dispatch({
+        .then(data => this.props.dispatch({
             type:'GET_PROJECTS',
             data:data
-        }))
+        }))        
+    }
 
-        
+    setProjectForm = () => {
+        this.props.dispatch({
+            type:'SET_PROJECT_FORM',
+        })
     }
     
 
@@ -39,8 +36,11 @@ class Project extends React.Component {
             .then(response => console.log(response))
             .catch(err => console.error(err))
 
-            const projects = this.state.project.filter(project => project.project_id !== id)
-            this.setState({ project: projects })
+            const projects = this.props.projects.allProjects.filter(project => project.project_id !== id)
+            this.props.dispatch({
+                type:'GET_PROJECTS',
+                data:projects
+            })
         }
 
     }
@@ -90,7 +90,7 @@ class Project extends React.Component {
                         expected_completion_time={project.expected_completion_time}
                         project_id={project.project_id}
                         show={this.props.projects.projectForm}
-                        onHide={() => store.dispatch({ type:'SET_PROJECT_FORM' })}
+                        onHide={() => this.props.dispatch({ type:'SET_PROJECT_FORM' })}
                     />
 
                 </div>

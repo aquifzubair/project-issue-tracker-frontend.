@@ -4,35 +4,37 @@ import { Button } from 'react-bootstrap';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
 
 class Issues extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            issues: [],
-            statusUpdate: false
-        }
-    }
-
     componentDidMount() {
         axios.get(`/issues/${this.props.match.params.id}`)
-        .then(data => data.data)
-        .then(data => this.setState({ issues: data }))
+            .then(data => data.data)
+            .then(data => this.props.dispatch({
+                type: 'GET_ISSUES',
+                data: data
+            }))
     }
+
 
     delete = (id, e) => {
         const confirmation = window.confirm('Do you wanna delete this issue');
         if (confirmation) {
             axios.delete(`/issues/delete/${id}`)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
-
-            const filterIssue = this.state.issues.filter(issue => issue.issue_id !== id)
-            this.setState({ issues: filterIssue })
+                .then(() => {
+                    axios.get(`/issues/${this.props.match.params.id}`)
+                        .then(data => data.data)
+                        .then(data => this.props.dispatch({
+                            type: 'GET_ISSUES',
+                            data: data
+                        }))
+                        .catch(err => console.error(err))
+                })
+                .catch(err => console.error(err))
         }
-
     }
+
 
     renderTooltip = (props, createdBy, assignedTo, createdOn) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -42,35 +44,20 @@ class Issues extends React.Component {
         </Tooltip>
     );
 
+
     handleChange = (id, e) => {
         axios({
             method: 'put',
             url: `/issues/status/${id}`,
             data: { issue_status: `${e.target.value}` }
         })
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
-
-        this.setState({
-            statusUpdate: !this.state.statusUpdate
-        })
-    }
-
-    componentDidUpdate() {
-        if (this.state.statusUpdate) {
-            axios.get(`/issues/${this.props.match.params.id}`)
-            .then(data => data.data)
-            .then(data => this.setState({
-                issues: data,
-                statusUpdate: !this.state.statusUpdate
-            }))
+            .then(response => console.log(response))
             .catch(err => console.error(err))
-        }
     }
 
 
     render() {
-        const allIssues = this.state.issues.map(issue => {
+        const allIssues = this.props.issues.allIssues.map(issue => {
             return (
 
                 <div className='issue' key={issue.issue_id}>
@@ -130,4 +117,10 @@ class Issues extends React.Component {
     }
 }
 
-export default Issues;
+const matchStateToProps = (state) => {
+    return {
+        issues: state.issueReducer.issues
+    }
+}
+
+export default connect(matchStateToProps)(Issues);

@@ -4,7 +4,6 @@ import axios from './../utils/API';
 class IssueForm extends React.Component {
     constructor(props) {
         super(props)
-        console.log(this.props)
         this.state = {
             issue_summary: '',
             issue_description: '',
