@@ -4,27 +4,32 @@ import { Button } from 'react-bootstrap';
 import CommentEditForm from './CommentEditForm';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Comments extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            comments: [],
             modalShow: false
         }
     }
 
     setModalShow = () => {
-        this.setState({
-            modalShow: true
-        })
+        this.setState({modalShow:true})
     }
 
     componentDidMount() {
         axios.get(`/comments/${this.props.match.params.id}`)
             .then(response => response.data)
-            .then(response => this.setState({ comments: response }))
+            .then(response => {
+                this.props.dispatch({
+                    type:'GET_COMMENTS',
+                    data:response
+                })
+            })
             .catch(err => console.error(err))
+        
+             
 
     }
 
@@ -36,8 +41,11 @@ class Comments extends React.Component {
             .then(response => console.log(response))
             .catch(err => console.error(err))
 
-            const filterComments = this.state.comments.filter(comment => comment.comment_id !== id)
-            this.setState({ comments: filterComments })
+            const filterComments = this.props.comments.allComments.filter(comment => comment.comment_id !== id)
+            this.props.dispatch({
+                type:'GET_COMMENTS',
+                data:filterComments
+            })
         }
 
     }
@@ -50,7 +58,7 @@ class Comments extends React.Component {
 
 
     render() {
-        const allComments = this.state.comments.map(comment => {
+        const allComments = this.props.comments.allComments.map(comment => {
             return (
                 <div key={comment.comment_id} className='comment'>
 
@@ -69,12 +77,12 @@ class Comments extends React.Component {
                     </div>
 
                     <div className='item'>
-                        <Button variant="outline-secondary" size='sm' onClick={this.setModalShow}>Edit Comment</Button>
+                        <Button variant="outline-secondary" size='sm' onClick={() => this.setModalShow()}>Edit Comment</Button>
                     </div>
 
                     <div className='item'>
                         <Link to={`/commentForm/${this.props.match.params.id}`}>
-                            <Button variant="outline-secondary" size='sm' onClick={this.setModalShow}>New Comment</Button>
+                            <Button variant="outline-secondary" size='sm'>New Comment</Button>
                         </Link>
                     </div>
 
@@ -84,7 +92,7 @@ class Comments extends React.Component {
                         comment_message={comment.comment_message}
                         comment_by={comment.comment_by}
                         show={this.state.modalShow}
-                        onHide={() => this.setState({ modalShow: false })}
+                        onHide={() => this.setState({modalShow:false})}
                     />
 
                     <div className='item-end'>
@@ -111,4 +119,10 @@ class Comments extends React.Component {
     }
 }
 
-export default Comments;
+const mapStateToProps = state => {
+    return {
+        comments:state.commentReducer.comments
+    }
+}
+
+export default connect(mapStateToProps)(Comments);

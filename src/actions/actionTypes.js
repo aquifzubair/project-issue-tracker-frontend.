@@ -3,3 +3,5 @@ export const SET_PROJECT_FORM = 'SET_PROJECT_FORM';
 
 export const GET_ISSUES = 'GET_ISSUES';
 
+export const GET_COMMENTS = 'GET_COMMENTS';
+

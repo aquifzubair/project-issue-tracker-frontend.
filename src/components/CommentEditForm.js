@@ -5,7 +5,7 @@ import {Modal} from 'react-bootstrap';
 class CommentEditForm extends React.Component {
     constructor(props) {
         super(props)
-        console.log(props)
+        console.log(this.props, 'comment Edit Form ')
         this.state = {
             comment_message:this.props.comment_message,
             comment_by:this.props.comment_by,
@@ -20,7 +20,7 @@ class CommentEditForm extends React.Component {
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e,id) => {
         e.preventDefault();
         axios(
             {
@@ -41,9 +41,11 @@ class CommentEditForm extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <Modal
                 {...this.props}
+                
                 size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -54,7 +56,7 @@ class CommentEditForm extends React.Component {
                         Edit Comment form
                 </Modal.Title>
                 </Modal.Header>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(e,id) => this.handleSubmit(e,this.props.comment_id)}>
                     
                     <label> Comment:</label>
                     <textarea 
