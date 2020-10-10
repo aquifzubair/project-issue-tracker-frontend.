@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from './../utils/API';
 import { Modal } from 'react-bootstrap';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import store from '../store'
 
 class ProjectForm extends React.Component {
@@ -32,23 +32,23 @@ class ProjectForm extends React.Component {
                 data: this.state
             }
         )
-        .then(response => {
-            axios.get('/projects')
-            .then(data => data.data)
-            .then(data => store.dispatch({
-            type:'GET_PROJECTS',
-            data:data
-        }))
-        .then(()=>{
-            alert(response.data.message)
-            this.props.onHide()
-        })
-                            
-        })
-        .catch(err => {
-            console.error(err)
-            alert(err)
-        })
+            .then(response => {
+                axios.get('/projects')
+                    .then(data => data.data)
+                    .then(data => store.dispatch({
+                        type: 'GET_PROJECTS',
+                        data: data
+                    }))
+                    .then(() => {
+                        alert(response.data.message)
+                        this.props.onHide()
+                    })
+
+            })
+            .catch(err => {
+                console.error(err)
+                alert(err)
+            })
     }
 
     render() {
@@ -66,52 +66,75 @@ class ProjectForm extends React.Component {
                 </Modal.Title>
                 </Modal.Header>
 
-                    <form onSubmit={this.handleSubmit} className='form-group'>
-
+                <form onSubmit={this.handleSubmit} className='container'>
+                    <div className='form-group'>
                         <label>Project Name:</label>
-                            <input 
-                                type='text' 
-                                onChange={this.handleChange} 
-                                name='project_name' 
-                                className='form-control form-control-sm' 
-                                required
-                            ></input><br />
-                        
+                        <input
+                            type='text'
+                            onChange={this.handleChange}
+                            name='project_name'
+                            className='form-control'
+                            required
+                        ></input>
+                    </div>
+
+
+                    <div className='form-group'>
                         <label> Created By:</label>
-                            <input 
-                                type='text' 
-                                onChange={this.handleChange} 
-                                name='created_by' 
-                                className='form-control form-control-sm' 
-                                required
-                            ></input><br />
-                        
-                        <label> Description:</label> 
-                            <textarea 
-                                type='textarea' 
-                                onChange={this.handleChange} 
-                                name='description' 
-                                required></textarea
-                            ><br />
-                        
+                        <input
+                            type='text'
+                            onChange={this.handleChange}
+                            name='created_by'
+                            className='form-control'
+                            required
+                        ></input>
+                    </div>
+
+
+                    <div className='form-group'>
+
+                        <label> Description:</label>
+                        <textarea
+                            type='textarea'
+                            onChange={this.handleChange}
+                            name='description'
+                            className='form-control'
+                            required>
+                        </textarea>
+
+
+                    </div>
+
+
+                    <div className='form-group'>
+
                         <label> Created on:</label>
-                            <input 
-                                type='date' 
-                                onChange={this.handleChange} 
-                                name='created_on' 
-                                required
-                            ></input><br />
-                        
+                        <input
+                            type='date'
+                            onChange={this.handleChange}
+                            name='created_on'
+                            className='form-control'
+                            required
+                        ></input>
+
+                    </div>
+
+
+                    <div className='form-group'>
                         <label> Completion time:</label>
-                            <input 
-                                type='date' 
-                                onChange={this.handleChange} 
-                                name='expected_completion_time' 
-                                required
-                            ></input><br />
-                        
-                        <button type='submit' className='btn btn-primary' >Submit</button><br />
-                    </form>
+                        <input
+                            type='date'
+                            onChange={this.handleChange}
+                            name='expected_completion_time'
+                            className='form-control'
+                            required
+                        ></input>
+
+                    </div>
+
+
+                    <button type='submit' className='btn btn-primary' >Submit</button>
+                </form>
 
                 <Modal.Footer>
                     <button onClick={this.props.onHide}>Close</button>
@@ -123,8 +146,8 @@ class ProjectForm extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return{
-        projects:state.projectReducer.projects
+    return {
+        projects: state.projectReducer.projects
     }
 }
 

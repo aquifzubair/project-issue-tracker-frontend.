@@ -1,5 +1,6 @@
 body {
   background-image:linear-gradient(to right, rgb(17, 1, 1), rgb(42, 30, 30));
+  /* background:url('../src/assets/image/landingPage.jpg'); */
   background-size:cover;
 }
 
@@ -19,8 +20,12 @@ form {
   justify-content: space-evenly;
   margin:auto;
   width:30%;
+  margin:auto;  
+}
+
+.form-width {
+  width:50vw;
   margin:auto;
-  
 }
 
 .allProjects {

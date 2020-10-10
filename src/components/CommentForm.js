@@ -5,9 +5,9 @@ class CommentForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            comment_message:'',
-            comment_by:'',
-            issue_id:this.props.match.params.id
+            comment_message: '',
+            comment_by: '',
+            issue_id: this.props.match.params.id
         }
     }
 
@@ -27,49 +27,57 @@ class CommentForm extends React.Component {
                 data: this.state
             }
         )
-        .then(response => {
-            console.log(response)
-            alert(response.data.message)
-            this.setState({
-                comment_message:'',
-                comment_by:'',
-                issue_id:''
+            .then(response => {
+                console.log(response)
+                alert(response.data.message)
+                this.setState({
+                    comment_message: '',
+                    comment_by: '',
+                    issue_id: ''
+                })
             })
-        })
-        .catch(err => {
-            console.error(err)
-            alert(err)
-        })
+            .catch(err => {
+                console.error(err)
+                alert(err)
+            })
     }
 
     render() {
         console.log(this.props.match.params.id)
         return (
-            
-                <form onSubmit={this.handleSubmit} className='text-light'>
+
+            <form onSubmit={this.handleSubmit} className='text-light'>
+                <h2>Comment Form</h2>
+                <div className='form-group'>
+
                     <label> Comment By:</label>
-                    <input 
-                        type='text' 
-                        onChange={this.handleChange} 
-                        name='comment_by' 
-                        className='form-control form-control-sm' 
+                    <input
+                        type='text'
+                        onChange={this.handleChange}
+                        name='comment_by'
+                        className='form-control form-control-sm'
                         required
                     ></input>
-                    
+                </div>
+
+
+                <div className='form-group'>
                     <label> Comment Message</label>
-                    <textarea 
+                    <textarea
                         type='textarea'
-                        onChange={this.handleChange} 
-                        name='comment_message' 
-                        className="form-control" 
-                        row='10' 
+                        onChange={this.handleChange}
+                        name='comment_message'
+                        className="form-control"
+                        row='10'
                         required
-                    ></textarea><br></br>                    
-                    
-                    <button type='submit' className='btn btn-primary'>Submit</button>
-                    
-                </form>
-               
+                    ></textarea>
+                </div>
+
+
+                <button type='submit' className='btn btn-primary'>Submit</button>
+
+            </form>
+
         )
     }
 }

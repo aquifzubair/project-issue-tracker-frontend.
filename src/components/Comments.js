@@ -11,6 +11,7 @@ class Comments extends React.Component {
         axios.get(`/comments/${this.props.match.params.id}`)
             .then(response => response.data)
             .then(response => {
+                console.log(response,"===============")
                 this.props.dispatch({
                     type: 'GET_COMMENTS',
                     data: response
@@ -49,14 +50,14 @@ class Comments extends React.Component {
                 <div key={comment.comment_id} className='comment'>
 
                     <div className='item'>
-                        {comment.comment_by}
+                        {comment.comment__by}
                     </div>
 
                     <div className='item2 item'>
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 250, hide: 400 }}
-                            overlay={this.renderTooltip(this.props, comment.comment_by)}
+                            overlay={this.renderTooltip(this.props, comment.comment__by)}
                         >
                             <p >{comment.comment_message}</p>
                         </OverlayTrigger>
@@ -74,8 +75,6 @@ class Comments extends React.Component {
                             <Button variant="outline-secondary" size='sm'>New Comment</Button>
                         </Link>
                     </div>
-
-
 
                     <div className='item-end'>
                         <Button onClick={(e) => this.delete(comment.comment_id, e)} variant="outline-danger" size='sm'>Delete</Button>

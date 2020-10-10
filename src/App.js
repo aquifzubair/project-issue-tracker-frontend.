@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 import Navbar from './components/Navbar';
@@ -15,15 +15,32 @@ import { Provider } from 'react-redux';
 import store from './store'
 import ProjectEditForm from './components/projectEditForm';
 import CommentEditForm from './components/CommentEditForm';
+import SignUp from './components/SignUp';
+import LogIn from './components/LogIn';
 
 const App = () => {
+
+  const token = localStorage.getItem('token');
+
+  const [isLoggedIn, setLoggedIn] = useState(token? true : false);
+
+  const handleLoggedIn = () => {    
+    setLoggedIn(!isLoggedIn)
+  }
+
   return (
     <Provider store={store}>
 
       <Router>
-        <Navbar />
+        <Navbar token={token} handleLoggedIn={handleLoggedIn} />
 
         <Switch>
+
+          <Route exact path='/signup'> <SignUp /> </Route>
+          <Route exact path='/login' component={(props) => <LogIn  handleLoggedIn={handleLoggedIn} {...props} />}>
+          </Route>
+
+
 
           <Route exact path='/'> <AllIssues /> </Route>
           <Route exact path='/projects'> <Project /> </Route>
@@ -35,7 +52,7 @@ const App = () => {
           <Route exact path={`/issue/:id`} component={Issues}></Route>
 
           <Route exact path={`/editProject/:id/:name/:createdOn/:createdBy/:description/:expectedDate`} component={ProjectEditForm} ></Route>
-          <Route exact path={`/editComment/:id/:issueId/:message/:commentBy`} component = {CommentEditForm}></Route>
+          <Route exact path={`/editComment/:id/:issueId/:message/:commentBy`} component={CommentEditForm}></Route>
 
         </Switch>
       </Router>

@@ -35,13 +35,13 @@ class AllIssues extends React.Component {
 
     }
 
-    renderTooltip = (props, createdBy, assignedTo,createdOn) => (
-        <Tooltip id="button-tooltip" {...props}>
-            <b>Created By:-</b> {createdBy} <br></br>
-            <b>Created On:-</b> {createdOn} <br></br>
-            <b>Assigned To:-</b> {assignedTo} <br></br>
-        </Tooltip>
-    );
+    // renderTooltip = (props, createdBy, assignedTo,createdOn) => (
+    //     <Tooltip id="button-tooltip" {...props}>
+    //         <b>Created By:-</b> {createdBy} <br></br>
+    //         <b>Created On:-</b> {createdOn} <br></br>
+    //         <b>Assigned To:-</b> {assignedTo} <br></br>
+    //     </Tooltip>
+    // );
 
     handleChange = (id,e) => {
         console.log(e.target.value)
@@ -78,16 +78,16 @@ class AllIssues extends React.Component {
                     <div className='issue' key={issue.issue_id}>
 
                         <div className='item'>
-                                <OverlayTrigger
+                                {/* <OverlayTrigger
                                     placement="bottom"
                                     delay={{ show: 250, hide: 400 }}
                                     overlay={this.renderTooltip(this.props, issue.identified_by, issue.assigned_to, issue.issue_date.slice(0,10))}
-                                >
+                                > */}
                                     <Link to={`/comments/${issue.issue_id}`}>
                                         <p className='text-bold'>{issue.issue_summary}</p>
                                     </Link>
 
-                                </OverlayTrigger>
+                                {/* </OverlayTrigger> */}
                         </div>
 
                         <div className='item item2'>
